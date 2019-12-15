@@ -10,7 +10,7 @@ export class DatePicker {
   @Prop({ mutable: true, reflect: true }) currDate = new Date();
   @State() calendarMatrix= [];
   @State() showCalendar = false;
-  @State() selectedDate = this.currDate;
+  @State() selectedDate = this.currDate.toISOString().slice(0, 16).replace(/-/g, "/").replace("T", " ");
 
 
   //need a lifehook function that populates calendarMatrix before
@@ -67,8 +67,8 @@ export class DatePicker {
 
     console.log("Day clicked");
 
-    this.selectedDate = date
-    console.log(this.selectedDate)
+    this.selectedDate = date.toISOString().slice(0, 16).replace(/-/g, "/").replace("T", " ")
+    console.log(this.selectedDate);
 
 
 
@@ -97,7 +97,7 @@ export class DatePicker {
     return (
       <div>
         <h3>The datepicker</h3>
-        <input id="date-input"value={this.selectedDate.toString()}/>
+        <input id="date-input" value={this.selectedDate.toString()}/>
         <button class="unstyled-button" onClick={this.toggleCalendar.bind(this)}>Calendar</button>
 
         <div id="main-content">
