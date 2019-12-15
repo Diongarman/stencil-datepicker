@@ -12,6 +12,7 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
   interface DatetimePicker {
     'currDate': Date;
+    'onDayClick': (date: Date) => Promise<string>;
     'toggleCalendar': () => Promise<boolean>;
   }
 }

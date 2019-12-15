@@ -62,13 +62,14 @@ export class DatePicker {
 
     this.calendarMatrix = outputArray;
   }
-
-  onDayClick(date: Date) {
+  @Method()
+  async onDayClick(date: Date) {
 
     console.log("Day clicked");
 
     this.selectedDate = date.toISOString().slice(0, 16).replace(/-/g, "/").replace("T", " ")
     console.log(this.selectedDate);
+    return this.selectedDate;
 
 
 
@@ -76,7 +77,6 @@ export class DatePicker {
 
 
   render() {
-    let mainContent = <slot />;
 
 
     //find a better place to do this as this array is created and assigned on every render
@@ -96,11 +96,12 @@ export class DatePicker {
 
     return (
       <div>
-        <h3>The datepicker</h3>
         <input id="date-input" value={this.selectedDate.toString()}/>
         <button class="unstyled-button" onClick={this.toggleCalendar.bind(this)}>Calendar</button>
 
-        <div id="main-content">
+        <div id="main-content" class={{
+          'is-open': this.showCalendar
+        }}>
           <h1>
             {months[this.currDate.getMonth()]} {this.currDate.getFullYear()}</h1>
             <div class="decrement-button">

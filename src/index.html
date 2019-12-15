@@ -10,26 +10,11 @@
 
 </head>
 <body>
-    <input id="date-input"value=""/>
-    <button id="showCalendar" >Calendar</button>
+
 
 <datetime-picker currDate={{new Date()}}></datetime-picker>
 <script>
-    const showCalendarButton = document.querySelector('#showCalendar');
-    const datepickerElement = document.querySelector('datetime-picker');
 
-
-    showCalendarButton.addEventListener('click', () => {
-      datepickerElement.toggleCalendar().then((val) => {
-        if (val) {
-          datepickerElement.style.display = "none";
-        } else {
-          datepickerElement.style.display = "block";
-        }
-      } )
-
-
-    })
 
 
 

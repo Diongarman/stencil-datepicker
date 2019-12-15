@@ -26,15 +26,22 @@ table {
   border-width: 5px;
   width:25%;
   padding-top:10px;
+  display: block;
+
+
+}
+
+.is-open{
+  transition: all 0.6s ease-in;
+
+  display: none !important;
 }
 
 #date-input {
   margin-bottom: 15px;
 }
 
-:host([open]) div #main-content{
-  display: block;
-}
+
 
 .decrement-button {
   display: inline-block;
