@@ -6,47 +6,19 @@ import { Component, h, State, Prop, Method } from '@stencil/core';
   shadow:true
 })
 export class DatePicker {
-
+  //currDate is a fixed date that is used to calculate values relative to that populate matrix
   @Prop({ mutable: true, reflect: true }) currDate = new Date();
   @State() calendarMatrix= [];
   @State() showCalendar = false;
   @State() selectedDate = this.currDate.toISOString().slice(0, 16).replace(/-/g, "/").replace("T", " ");
 
-
-  //need a lifehook function that populates calendarMatrix before
-  //this datepicker component loads
-  @Method()
-  async toggleCalendar() {
-
-    this.showCalendar = !this.showCalendar
-    return this.showCalendar
-
-
-  }
-
-  setTime() {
-    this.currDate = new Date(this.currDate.getFullYear(), this.currDate.getMonth(), );
-  }
-
-  decrementMonth() {
-    this.currDate = new Date(this.currDate.getFullYear(), this.currDate.getMonth() - 1);
-  }
-
-  incrementMonth() {
-    this.currDate = new Date(this.currDate.getFullYear(), this.currDate.getMonth() + 1);
-  }
-
   calendarMatrixPopulator() {
     //how far the first of the current month (whatever the state is set to) is from the start of the week
     let offset = new Date(this.currDate.getFullYear(), this.currDate.getMonth(), 1).getDay();
 
-
-
-
-
     this.calendarMatrix= [];
     for(let i = 0; i<42; i++) {
-      this.calendarMatrix.push(new Date(this.currDate.getFullYear(), this.currDate.getMonth(), (1 - offset) + i));
+      this.calendarMatrix.push(new Date(this.currDate.getFullYear(), this.currDate.getMonth(), (1 - offset) + i, 0));
     }
     this.restructureMatrix();
   }
@@ -66,15 +38,44 @@ export class DatePicker {
 
     this.calendarMatrix = outputArray;
   }
-  onDayClick(date: Date) {
+  //need a lifehook function that populates calendarMatrix before
+  //this datepicker component loads
+  @Method()
+  async toggleCalendar() {
 
-    console.log("Day clicked");
+    this.showCalendar = !this.showCalendar
+    return this.showCalendar
+
+  }
+
+  decrementMonth() {
+    this.currDate = new Date(this.currDate.getFullYear(), this.currDate.getMonth() - 1);
+  }
+
+  incrementMonth() {
+    this.currDate = new Date(this.currDate.getFullYear(), this.currDate.getMonth() + 1);
+  }
+
+
+  onHoursSelection(event) {
+    let hour = event.path[0].value;
+    this.currDate.setHours(hour)
+    this.selectedDate = this.currDate.toISOString().slice(0, 16).replace(/-/g, "/").replace("T", " ")
+  }
+
+  onMinutesSelection(event) {
+    let minute = event.path[0].value;
+    this.currDate.setMinutes(minute)
+    this.selectedDate = this.currDate.toISOString().slice(0, 16).replace(/-/g, "/").replace("T", " ")
+
+
+  }
+
+  onDayClick(date: Date) {
+    this.currDate = date
 
     this.selectedDate = date.toISOString().slice(0, 16).replace(/-/g, "/").replace("T", " ")
-    console.log(this.selectedDate);
     return this.selectedDate;
-
-
 
   }
 
@@ -90,13 +91,6 @@ export class DatePicker {
     //only want to change matrix before initial renders
     //and onMonth[/year]Increment and onMonth[/year]Increment
     this.calendarMatrixPopulator();
-
-
-    if (this.showCalendar) {
-      console.log('render triggered')
-
-
-    }
 
 
     return (
@@ -147,11 +141,12 @@ export class DatePicker {
           }
         </table>
 
+
         <div id="time">
           {
 
-            <select id="hours">
-
+            <select id="hours" onChange={(event: UIEvent) => this.onHoursSelection(event)}>
+              <option  disabled selected>Hours:</option>
             {hours.map((hour) =>
                 <option value={hour.toString()}>{hour}</option>
               )
@@ -162,8 +157,8 @@ export class DatePicker {
             }
 
             {
-            <select id="minutes">
-
+            <select id="minutes" onChange={(event: UIEvent) => this.onMinutesSelection(event)}>
+            <option  disabled selected>Minutes:</option>
             {minutes.map((minute) =>
                 <option value={minute.toString()}>{minute}</option>
               )
