@@ -18,7 +18,14 @@ td button{
 
 table {
   width: 25%;
+  display: inline;
 }
+
+#time {
+  display:inline-block;
+}
+
+
 
 #main-content {
   border-radius: 50px 50px 50px 5px;

@@ -24,6 +24,10 @@ export class DatePicker {
 
   }
 
+  setTime() {
+    this.currDate = new Date(this.currDate.getFullYear(), this.currDate.getMonth(), );
+  }
+
   decrementMonth() {
     this.currDate = new Date(this.currDate.getFullYear(), this.currDate.getMonth() - 1);
   }
@@ -62,8 +66,7 @@ export class DatePicker {
 
     this.calendarMatrix = outputArray;
   }
-  @Method()
-  async onDayClick(date: Date) {
+  onDayClick(date: Date) {
 
     console.log("Day clicked");
 
@@ -81,7 +84,9 @@ export class DatePicker {
 
     //find a better place to do this as this array is created and assigned on every render
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
+    let hours = Array.from(Array(24).keys());
+    let minutes = Array.from(Array(60).keys());
+    console.log(hours)
     //only want to change matrix before initial renders
     //and onMonth[/year]Increment and onMonth[/year]Increment
     this.calendarMatrixPopulator();
@@ -141,6 +146,38 @@ export class DatePicker {
             )
           }
         </table>
+
+        <div id="time">
+          {
+
+            <select id="hours">
+
+            {hours.map((hour) =>
+                <option value={hour.toString()}>{hour}</option>
+              )
+            }
+
+
+            </select>
+            }
+
+            {
+            <select id="minutes">
+
+            {minutes.map((minute) =>
+                <option value={minute.toString()}>{minute}</option>
+              )
+            }
+
+
+            </select>
+
+            }
+
+        </div>
+
+
+
         </div>
 
       </div>
