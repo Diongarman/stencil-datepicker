@@ -100,6 +100,7 @@ export class DatePicker {
         <button class="unstyled-button" onClick={this.toggleCalendar.bind(this)}>Calendar</button>
 
         <div id="main-content" class={{
+          'is-closed':!this.showCalendar,
           'is-open': this.showCalendar
         }}>
           <h1>

@@ -29,12 +29,19 @@ table {
   display: block;
 
 
+
+}
+
+.is-closed {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 300ms;
 }
 
 .is-open{
-  transition: all 0.6s ease-in;
-
-  display: none !important;
+  visibility: visible !important;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 300ms;
 }
 
 #date-input {
