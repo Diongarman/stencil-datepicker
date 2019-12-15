@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <title>Stencil Component Starter</title>
+
+  <script type="module" src="/build/datetime-picker.esm.js"></script>
+  <script nomodule src="/build/datetime-picker.js"></script>
+
+</head>
+<body>
+    <input id="date-input"value=""/>
+    <button id="showCalendar" >Calendar</button>
+
+<datetime-picker currDate={{new Date()}}></datetime-picker>
+<script>
+    const showCalendarButton = document.querySelector('#showCalendar');
+    const datepickerElement = document.querySelector('datetime-picker');
+
+
+    showCalendarButton.addEventListener('click', () => {
+      datepickerElement.toggleCalendar().then((val) => {
+        if (val) {
+          datepickerElement.style.display = "none";
+        } else {
+          datepickerElement.style.display = "block";
+        }
+      } )
+
+
+    })
+
+
+
+  </script>
+</body>
+</html>
